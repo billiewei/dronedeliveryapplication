@@ -16,28 +16,25 @@ Rectangle {
     visible: true
     color: "#FFF"
 
-//    function writeFlightLog(s){
-//        consolerectangle.append(s)
-//    }
-//    function changeFlightMode(){
-//        if (return_on_button.checked) {
-//            manual_control_handler.setFlightMode(0)
-//        }
-//        else if (delivery_button.checked) {
-//            manual_control_handler.setFlightMode(6)
-//        }
-//        else if (other_modes_button.checked) {
-//            if (manual_button.checked) {manual_control_handler.setFlightMode(1)}
-//            else if (assist_button.checked) {
-//                if (alt_control_button.checked) {manual_control_handler.setFlightMode(2)}
-//                else {manual_control_handler.setFlightMode(3)}
-//            }
-//            else if (auto_button.checked) {
-//                if (mission_button.checked) {manual_control_handler.setFlightMode(4)}
-//                else if (loiter_button.checked){manual_control_handler.setFlightMode(5)}
-//            }
-//        }
-//    }
+    function changeFlightMode(){
+        if (return_on_button.checked) {
+            manual_control_handler.sendModeCommand(0)
+        }
+        else if (delivery_button.checked) {
+            manual_control_handler.sendModeCommand(6)
+        }
+        else if (other_modes_button.checked) {
+            if (manual_button.checked) {manual_control_handler.sendModeCommand(1)}
+            else if (assist_button.checked) {
+                if (alt_control_button.checked) {manual_control_handler.sendModeCommand(2)}
+                else {manual_control_handler.sendModeCommand(3)}
+            }
+            else if (auto_button.checked) {
+                if (mission_button.checked) {manual_control_handler.sendModeCommand(4)}
+                else if (loiter_button.checked){manual_control_handler.sendModeCommand(5)}
+            }
+        }
+    }
 
     Button{
         id: home_button
@@ -48,7 +45,7 @@ Rectangle {
         anchors.leftMargin: page.width*0.025
         onClicked: {
             opening_page.visible = true
-//            manual_control_page.visible = false
+            manual_control_page.visible = false
         }
     }
     Button {
@@ -59,16 +56,16 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: home_button.x + home_button.width + page.width*0.02
         onClicked: {
-//            manual_control_page.visible = false
+            manual_control_page.visible = false
             if (vendor_handler.delivery != 0) {vendor_track_page.visible = true}
                 else {drone_location_page.visible = true}
         }
     }
     Label {
         id: batterytextlabel
-//        text: if (((manual_control_handler.voltage - 13500) / 31).toFixed(1) > 0) {
-//                  ((manual_control_handler.voltage - 13500) / 31).toFixed(1) + "%"}
-//              else {"0%"}
+        text: if (((manual_control_handler.voltage - 13500) / 31).toFixed(1) > 0) {
+                  ((manual_control_handler.voltage - 13500) / 31).toFixed(1) + "%"}
+              else {"0%"}
         y: home_button.y
         anchors.right: parent.right
         anchors.rightMargin: page.width*0.04
@@ -76,8 +73,7 @@ Rectangle {
     }
     Text {
         id: raw_voltage
-//        text: manual_control_handler.voltage + "mV"
-        //text: manual_control_handler.voltage
+        text: manual_control_handler.voltage + "mV"
         y: home_button.y + batterytextlabel.height
         anchors.right: parent.right
         anchors.rightMargin: page.width*0.04
@@ -101,17 +97,17 @@ Rectangle {
         y: remainingbatteryoutline.y + 2
         radius: 1
         height: remainingbatteryoutline.height - 4
-//        width: if (((manual_control_handler.voltage - 13500) / 31) > 0.0) {
-//            (remainingbatteryoutline.width - 4.0)*(((manual_control_handler.voltage - 13500) / 3100))}
-//               else {0}
-//        color: if (((manual_control_handler.voltage - 13500) / 31) >= 85.00) {"#65E01F"}
-//               else if (((manual_control_handler.voltage - 13500) / 31) >= 60.00) {"#FF790A"}
-//               else if (((manual_control_handler.voltage - 13500) / 31) < 60.00) {"#D60000"}
+        width: if (((manual_control_handler.voltage - 13500) / 31) > 0.0) {
+            (remainingbatteryoutline.width - 4.0)*(((manual_control_handler.voltage - 13500) / 3100))}
+               else {0}
+        color: if (((manual_control_handler.voltage - 13500) / 31) >= 85.00) {"#65E01F"}
+               else if (((manual_control_handler.voltage - 13500) / 31) >= 60.00) {"#FF790A"}
+               else if (((manual_control_handler.voltage - 13500) / 31) < 60.00) {"#D60000"}
     }
     Rectangle {
         id: toprowrectangle
         color: "#F2F2F2"
-        height: computercontrollabel.height + armingstatelabel.height + lat_label.height + page.height*0.04
+        height: computercontrollabel.height + armingstatelabel.height + lat_label.height + page.height*0.012
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: page.height*0.06
@@ -152,7 +148,7 @@ Rectangle {
             anchors.top: computercontrollabel.bottom
             anchors.topMargin: page.height*0.01
             checked: false
-//            onCheckedChanged: manual_control_handler.setArmed(checked)
+            onCheckedChanged: manual_control_handler.sendArmCommand(checked)
         }
         Text {
             id: lat_label
@@ -171,24 +167,74 @@ Rectangle {
 //            text: "Longitude: " + manual_control_handler.longitude.toFixed(8)
         }
     }
-    TextArea {
-        id: consolerectangle
-        y: toprowrectangle.y + toprowrectangle.height + page.height*0.02
-        width: page.width*0.95
-        height: page.height*0.15
+
+    Rectangle {
+        id: networkrectangle
+        color: "#F2F2F2"
+        y: toprowrectangle.y + toprowrectangle.height + page.height*0.01
+        height: ip_label.height + port_label.height + connect_group.height + page.height*0.08
         anchors.horizontalCenter: parent.horizontalCenter
-        text: "Here is the flight log... ..."
-        backgroundVisible: true
-        wrapMode: TextEdit.Wrap 
-        style: TextAreaStyle {
-                textColor: "#FFB91F"
-                selectedTextColor: "#fff"
-                backgroundColor: "#3A3A50"
+        width: page.width*0.95
+        radius: 5
+        Label {
+            id: ip_label
+            anchors.left: parent.left
+            anchors.leftMargin: page.width*0.08
+            anchors.top: parent.top
+            anchors.topMargin: page.height*0.02
+            text: "IP Address"
+        }
+        TextField {
+            id: ip_txt_field
+            y: ip_label.y
+            anchors.left: parent.left
+            anchors.leftMargin: ip_label.x + ip_label.width + page.width*0.05
+            placeholderText: "Please enter in IP Address"
+            width: parent.width*0.6
+        }
+        Label {
+            id: port_label
+            anchors.left: parent.left
+            anchors.leftMargin: page.width*0.08
+            anchors.top: ip_label.bottom
+            anchors.topMargin: page.height*0.02
+            text: "Port"
+        }
+        TextField {
+            id: port_txt_field
+            y: port_label.y
+            anchors.left: parent.left
+            anchors.leftMargin: ip_label.x + ip_label.width + page.width*0.05
+            placeholderText: "Please enter the port number"
+            width: parent.width*0.6
+        }
+        RowLayout {
+            id: connect_group
+            x: ip_label.x
+            y: port_txt_field.y + port_txt_field.height + page.height*0.02
+            spacing: 20
+            anchors.horizontalCenter: parent.horizontalCenter
+            Button {
+                text: "Connect"
+                isDefault: true
+                onClicked: {
+                    manual_control_handler.setHostAddress(ip_txt_field.text)
+                    manual_control_handler.setPort(port_txt_field.text)
+                    manual_control_handler.connectServer()
+                }
+            }
+
+            Button {
+                text: "Disconnect"
+                onClicked: manual_control_handler.disconnectServer()
+            }
+
+            Label { text: manual_control_handler.status}
         }
     }
     Rectangle {
         id: controlsliders
-        y: consolerectangle.y + consolerectangle.height + page.height*0.02
+        y: networkrectangle.y + networkrectangle.height + page.height*0.015
         width: page.width*0.95
         height: page.height*0.32
         anchors.horizontalCenter: parent.horizontalCenter
@@ -226,7 +272,7 @@ Rectangle {
                     radius: 8
                 }
             }
-//            onValueChanged: manual_control_handler.setZ(value)
+           onValueChanged: manual_control_handler.setZ(value)
 
         }
         Text {
@@ -268,7 +314,7 @@ Rectangle {
                     radius: 8
                 }
             }
-//            onValueChanged: manual_control_handler.setX(value)
+            onValueChanged: manual_control_handler.setX(value)
             onPressedChanged: value = 0
         }
         Text {
@@ -309,7 +355,7 @@ Rectangle {
                     radius: 8
                 }
             }
-//            onValueChanged: manual_control_handler.setY(value)
+            onValueChanged: manual_control_handler.setY(value)
             onPressedChanged: value = 0
         }
         Text {
@@ -350,7 +396,7 @@ Rectangle {
                     radius: 8
                 }
             }
-//            onValueChanged: manual_control_handler.setR(value)
+            onValueChanged: manual_control_handler.setR(value)
             onPressedChanged: value = 0
         }
         Text {

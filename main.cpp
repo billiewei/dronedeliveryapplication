@@ -39,7 +39,7 @@
 #include "batterypagehandler.h"
 #include "menupagehandler.h"
 #include "vendorhandler.h"
-// #include "manualcontrolhandler.h"
+#include "manualcontrolhandler.h"
 
 int main(int argc, char *argv[])
 {
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<MenuPageHandler>("HKUST",1,0,"MenuPageHandler");
     qmlRegisterType<VendorHandler>("HKUST",1,0,"VendorHandler");
     qmlRegisterType<BatteryPageHandler>("HKUST",1,0,"BatteryPageHandler");
-    // qmlRegisterType<ManualControlHandler>("HKUST",1,0,"ManualControlHandler");
+    qmlRegisterType<ManualControlHandler>("HKUST",1,0,"ManualControlHandler");
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

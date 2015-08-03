@@ -95,11 +95,9 @@ ApplicationWindow {
     ManualControlPage {
         id: manual_control_page
         visible: false
-//        ManualControlHandler{
-//            id: manual_control_handler
-//            log: "hello world"
-//            onLogChanged: manual_control_page.writeFlightLog(log)
-//        }
+        ManualControlHandler{
+            id: manual_control_handler
+        }
     }
 
     MenuPage{
@@ -114,11 +112,6 @@ ApplicationWindow {
             num4: 0
             total: 0
         }
-    }
-
-    NetworkPage {
-        id: network_page
-        visible: false
     }
 
     OpeningPage {

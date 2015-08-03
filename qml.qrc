@@ -22,5 +22,10 @@
         <file>images/logo.png</file>
         <file>images/application-exit.png</file>
         <file>images/clear.png</file>
+        <file>images/checkgreen.png</file>
+        <file>images/checkgrey.png</file>
+        <file>images/amx.png</file>
+        <file>images/visa.png</file>
+        <file>images/discover.png</file>
     </qresource>
 </RCC>

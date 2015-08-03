@@ -16,7 +16,7 @@ Rectangle {
         anchors.bottomMargin: page.width*0.05
         width: page.width*.10
         height: page.width*.10
-        source: "qrc:/logo.png"
+        source: "qrc:/images/logo.png"
         asynchronous : true
     }
     Text {
@@ -53,7 +53,7 @@ Rectangle {
                 width: page.width*0.1
                 height: page.width*0.1
                 fillMode: Image.PreserveAspectFit
-                source: "amx.png"
+                source: "qrc:/images/amx.png"
             }
         }
         Column {
@@ -72,7 +72,7 @@ Rectangle {
                 width: page.width*0.1
                 height: page.width*0.1
                 fillMode: Image.PreserveAspectFit
-                source: "visa.png"
+                source: "qrc:/images/visa.png"
             }
         }
         Column {
@@ -91,7 +91,7 @@ Rectangle {
                 width: page.width*0.1
                 height: page.width*0.1
                 fillMode: Image.PreserveAspectFit
-                source: "discover.png"
+                source: "qrc:/images/discover.png"
             }
         }
     }

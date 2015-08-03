@@ -17,7 +17,7 @@ Rectangle {
         anchors.bottomMargin: page.width*0.05
         width: page.width*.10
         height: page.width*.10
-        source: "qrc:/logo.png"
+        source: "qrc:/images/logo.png"
         asynchronous : true
     }
     Text {
@@ -214,7 +214,7 @@ Rectangle {
         width: orderrecieved.height + 10
         anchors.right: parent.right
         anchors.rightMargin: 70
-        source: "checkgreen.png"
+        source: "qrc:/images/checkgreen.png"
     }
     Text {
         id: enroute
@@ -233,8 +233,8 @@ Rectangle {
         width: enroute.height + 10
         anchors.right: parent.right
         anchors.rightMargin: 70
-        source: if (vendor_handler.enroute == 1) {"checkgreen.png"}
-                else {"checkgrey.png"}
+        source: if (vendor_handler.enroute == 1) {"qrc:/images/checkgreen.png"}
+                else {"qrc:/images/checkgrey.png"}
     }
     Text {
         id: delivered2
@@ -253,8 +253,8 @@ Rectangle {
         anchors.right: parent.right
         anchors.rightMargin: 70
         source:
-            if (Math.abs(customerlat.text - manual_control_handler.latitude) < 0.0002 & Math.abs(customerlong.text - manual_control_handler.longitude) < 0.0002) {"checkgreen.png"}
-            else {"checkgrey.png"}
+            if (Math.abs(customerlat.text - manual_control_handler.latitude) < 0.0002 & Math.abs(customerlong.text - manual_control_handler.longitude) < 0.0002) {"qrc:/images/checkgreen.png"}
+            else {"qrc:/images/checkgrey.png"}
     }
     Button {
         anchors.horizontalCenter: parent.horizontalCenter

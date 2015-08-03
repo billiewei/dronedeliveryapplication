@@ -16,7 +16,7 @@ Rectangle {
         anchors.bottomMargin: page.width*0.05
         width: page.width*.10
         height: page.width*.10
-        source: "qrc:/logo.png"
+        source: "qrc:/images/logo.png"
     }
     Text {
         anchors.horizontalCenter: parent.horizontalCenter
@@ -256,8 +256,8 @@ Rectangle {
         anchors.right: parent.right
         anchors.rightMargin: 50
         source:
-            if (Math.abs(targetlatitude.text - manual_control_handler.latitude) < 0.0002 & Math.abs(targetlongitude.text - manual_control_handler.longitude) < 0.0002) {"checkgreen.png"}
-        else {"checkgrey.png"}
+            if (Math.abs(targetlatitude.text - manual_control_handler.latitude) < 0.0002 & Math.abs(targetlongitude.text - manual_control_handler.longitude) < 0.0002) {"qrc:/images/checkgreen.png"}
+        else {"qrc:/images/checkgrey.png"}
 
     }
     Text {
@@ -277,8 +277,8 @@ Rectangle {
         anchors.right: parent.right
         anchors.rightMargin: 50
         source:
-            if (Math.abs(vendor_handler.latitude - manual_control_handler.latitude) < 0.0002 & Math.abs(vendor_handler.longitude - manual_control_handler.longitude) < 0.0002) {"checkgreen.png"}
-        else {"checkgrey.png"}
+            if (Math.abs(vendor_handler.latitude - manual_control_handler.latitude) < 0.0002 & Math.abs(vendor_handler.longitude - manual_control_handler.longitude) < 0.0002) {"qrc:/images/checkgreen.png"}
+        else {"qrc:/images/checkgrey.png"}
 
     }
     Text {

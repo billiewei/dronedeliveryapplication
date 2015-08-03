@@ -7,7 +7,8 @@ SOURCES += main.cpp \
     menupagehandler.cpp \
     addresspagehandler.cpp \
     console.cpp \
-    batterypagehandler.cpp
+    batterypagehandler.cpp \
+    manualcontrolhandler.cpp
 
 RESOURCES += qml.qrc
 
@@ -178,4 +179,5 @@ HEADERS += \
     mavlink/v1.0/test/mavlink.h \
     mavlink/v1.0/test/test.h \
     mavlink/v1.0/test/testsuite.h \
-    mavlink/v1.0/test/version.h
+    mavlink/v1.0/test/version.h \
+    manualcontrolhandler.h
