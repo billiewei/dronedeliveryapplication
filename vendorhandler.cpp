@@ -1,4 +1,5 @@
 #include "vendorhandler.h"
+#include <cmath>
 
 VendorHandler::VendorHandler(QQuickItem *parent): QQuickItem(parent),
   vendor_latitude(22.3349168), vendor_longitude(114.2631638), vendor_delivery(0)

@@ -15,18 +15,12 @@
         <file>DroneLocationPage.qml</file>
         <file>OpeningPage.qml</file>
         <file>ManualControlPage.qml</file>
-        <file>MalfunctioningPage.qml</file>
         <file>ReceivedOrderCheck.qml</file>
         <file>AboutPage.qml</file>
-        <file>MalfunctioningCustNotification.qml</file>
         <file>images/person.png</file>
         <file>images/home.png</file>
         <file>images/logo.png</file>
-        <file>images/safety.png</file>
         <file>images/application-exit.png</file>
         <file>images/clear.png</file>
-        <file>images/connect.png</file>
-        <file>images/disconnect.png</file>
-        <file>images/settings.png</file>
     </qresource>
 </RCC>

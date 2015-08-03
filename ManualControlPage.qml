@@ -16,9 +16,9 @@ Rectangle {
     visible: true
     color: "#FFF"
 
-    function writeFlightLog(s){
-        consolerectangle.append(s)
-    }
+//    function writeFlightLog(s){
+//        consolerectangle.append(s)
+//    }
 //    function changeFlightMode(){
 //        if (return_on_button.checked) {
 //            manual_control_handler.setFlightMode(0)
@@ -388,22 +388,22 @@ Rectangle {
                         text: "Return On"
                         checked: false
                         exclusiveGroup: returnGroup
-                        onCheckedChanged: changeFlightMode()
+//                        onCheckedChanged: changeFlightMode()
                     }
                     RadioButton {
                         id: delivery_button
                         text: "Delivery"
                         checked: false
                         exclusiveGroup: returnGroup
-                        onCheckedChanged: changeFlightMode()
+//                        onCheckedChanged: changeFlightMode()
                     }
                     RadioButton {
                         id: other_modes_button
                         text: "Other Modes"
                         checked: true
                         exclusiveGroup: returnGroup
-                        onCheckedChanged: changeFlightMode()
-                    }
+//                        onCheckedChanged: changeFlightMode()
+//                    }
 
                 }
             }
@@ -425,21 +425,21 @@ Rectangle {
                         text: "Manual";
                         exclusiveGroup: modeGroup;
                         checked: true
-                        onCheckedChanged: changeFlightMode()
+//                        onCheckedChanged: changeFlightMode()
                     }
                     RadioButton {
                         id: assist_button;
                         text: "Assist";
                         checked: false
                         exclusiveGroup: modeGroup;
-                        onCheckedChanged: changeFlightMode()
+//                        onCheckedChanged: changeFlightMode()
                     }
                     RadioButton {
                         id: auto_button;
                         text: "Auto";
                         exclusiveGroup: modeGroup;
                         checked: false;
-                        onCheckedChanged: changeFlightMode()
+//                        onCheckedChanged: changeFlightMode()
                     }
                 }
             }
@@ -461,14 +461,14 @@ Rectangle {
                         text: "Alt Control";
                         checked: false
                         exclusiveGroup: assistGroup;
-                        onCheckedChanged: changeFlightMode()
+//                        onCheckedChanged: changeFlightMode()
                     }
                     RadioButton {
                         id: pos_control_button
                         text: "Pos Control";
                         checked: true
                         exclusiveGroup: assistGroup;
-                        onCheckedChanged: changeFlightMode()
+//                        onCheckedChanged: changeFlightMode()
                     }
                 }
             }
@@ -490,17 +490,18 @@ Rectangle {
                         text: "Mission";
                         checked: false;
                         exclusiveGroup: autoGroup;
-                        onCheckedChanged: changeFlightMode()
+//                        onCheckedChanged: changeFlightMode()
                     }
                     RadioButton {
                         id: loiter_button
                         text: "Loiter";
                         checked: true;
                         exclusiveGroup: autoGroup
-                        onCheckedChanged: changeFlightMode()
+//                        onCheckedChanged: changeFlightMode()
                     }
                 }
             }
         }
 }
 
+}

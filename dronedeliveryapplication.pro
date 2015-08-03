@@ -4,8 +4,6 @@ QT += qml quick widgets
 
 SOURCES += main.cpp \
     vendorhandler.cpp \
-    manualcontrolhandler.cpp \
-    mavserialport.cpp \
     menupagehandler.cpp \
     addresspagehandler.cpp \
     console.cpp \
@@ -22,7 +20,6 @@ include(deployment.pri)
 HEADERS += \
     vendorhandler.h \
     dearbuttons.h \
-    manualcontrolhandler.h \
     px4_custom_mode.h \
     console.h \
     addresspagehandler.h \
