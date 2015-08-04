@@ -12,7 +12,7 @@
 #include "mavlink/v1.0/common/mavlink.h"
 #include "mavlink/v1.0/pixhawk/mavlink.h"
 #include "px4_custom_mode.h"
-//#include "dearbuttons.h"
+
 
 class ManualControlHandler : public QQuickItem
 {

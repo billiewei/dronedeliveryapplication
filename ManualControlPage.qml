@@ -18,20 +18,20 @@ Rectangle {
 
     function changeFlightMode(){
         if (return_on_button.checked) {
-            manual_control_handler.sendModeCommand(0)
+            manual_control_handler.set_mode_return()
         }
         else if (delivery_button.checked) {
-            manual_control_handler.sendModeCommand(6)
+            manual_control_handler.set_mode_auto_delivery()
         }
         else if (other_modes_button.checked) {
-            if (manual_button.checked) {manual_control_handler.sendModeCommand(1)}
+            if (manual_button.checked) {manual_control_handler.set_mode_manual()}
             else if (assist_button.checked) {
-                if (alt_control_button.checked) {manual_control_handler.sendModeCommand(2)}
-                else {manual_control_handler.sendModeCommand(3)}
+                if (alt_control_button.checked) {manual_control_handler.set_mode_assist_altctl()}
+                else {manual_control_handler.set_mode_assist_posctl()}
             }
             else if (auto_button.checked) {
-                if (mission_button.checked) {manual_control_handler.sendModeCommand(4)}
-                else {manual_control_handler.sendModeCommand(5)}
+                if (mission_button.checked) {manual_control_handler.set_mode_auto_mission()}
+                else {manual_control_handler.set_mode_auto_loiter()}
             }
         }
     }

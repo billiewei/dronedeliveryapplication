@@ -179,4 +179,5 @@ HEADERS += \
     mavlink/v1.0/test/test.h \
     mavlink/v1.0/test/testsuite.h \
     mavlink/v1.0/test/version.h \
-    manualcontrolhandler.h
+    manualcontrolhandler.h \
+    dearbuttons.h
