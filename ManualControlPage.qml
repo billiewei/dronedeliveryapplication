@@ -31,7 +31,7 @@ Rectangle {
             }
             else if (auto_button.checked) {
                 if (mission_button.checked) {manual_control_handler.sendModeCommand(4)}
-                else if (loiter_button.checked){manual_control_handler.sendModeCommand(5)}
+                else {manual_control_handler.sendModeCommand(5)}
             }
         }
     }
@@ -107,10 +107,10 @@ Rectangle {
     Rectangle {
         id: toprowrectangle
         color: "#F2F2F2"
-        height: computercontrollabel.height + armingstatelabel.height + lat_label.height + page.height*0.012
+        height: computercontrollabel.height + armingstatelabel.height + lat_label.height + page.height*0.03
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
-        anchors.topMargin: page.height*0.06
+        anchors.topMargin: page.height*0.07
         width: page.width*0.95
         radius: 5
         Label {
@@ -129,8 +129,8 @@ Rectangle {
             anchors.top: parent.top
             anchors.topMargin: page.height*0.01
             checked: false
-//            onCheckedChanged: if (computertoggle.checked == false) {manual_control_handler.stopTimer()}
-//                              else {manual_control_handler.startTimer()}
+            onCheckedChanged: if (computertoggle.checked == false) {manual_control_handler.stopTimer()}
+                              else {manual_control_handler.startTimer()}
         }
         Label {
             id: armingstatelabel
@@ -156,7 +156,7 @@ Rectangle {
             anchors.leftMargin: page.width*0.04
             anchors.top: armingstatelabel.bottom
             anchors.topMargin: page.height*0.01
-//            text: "Latitude: " + manual_control_handler.latitude.toFixed(8)
+            text: "Latitude: " + manual_control_handler.latitude.toFixed(7)
         }
         Text {
             id: lon_label
@@ -164,7 +164,7 @@ Rectangle {
             anchors.leftMargin: page.width*0.4
             anchors.top: armingstatelabel.bottom
             anchors.topMargin: page.height*0.01
-//            text: "Longitude: " + manual_control_handler.longitude.toFixed(8)
+            text: "Longitude: " + manual_control_handler.longitude.toFixed(7)
         }
     }
 
@@ -236,7 +236,7 @@ Rectangle {
         id: controlsliders
         y: networkrectangle.y + networkrectangle.height + page.height*0.015
         width: page.width*0.95
-        height: page.height*0.32
+        height: page.height*0.28
         anchors.horizontalCenter: parent.horizontalCenter
         color: toprowrectangle.color
         radius: 5
@@ -434,23 +434,23 @@ Rectangle {
                         text: "Return On"
                         checked: false
                         exclusiveGroup: returnGroup
-//                        onCheckedChanged: changeFlightMode()
+                        onClicked: changeFlightMode()
                     }
                     RadioButton {
                         id: delivery_button
                         text: "Delivery"
                         checked: false
                         exclusiveGroup: returnGroup
-//                        onCheckedChanged: changeFlightMode()
+                        onClicked: changeFlightMode()
+
                     }
                     RadioButton {
                         id: other_modes_button
                         text: "Other Modes"
                         checked: true
                         exclusiveGroup: returnGroup
-//                        onCheckedChanged: changeFlightMode()
-//                    }
-
+                        onClicked: changeFlightMode()
+                    }
                 }
             }
             GroupBox {
@@ -471,21 +471,21 @@ Rectangle {
                         text: "Manual";
                         exclusiveGroup: modeGroup;
                         checked: true
-//                        onCheckedChanged: changeFlightMode()
+                        onClicked: changeFlightMode()
                     }
                     RadioButton {
                         id: assist_button;
                         text: "Assist";
                         checked: false
                         exclusiveGroup: modeGroup;
-//                        onCheckedChanged: changeFlightMode()
+                        onClicked: changeFlightMode()
                     }
                     RadioButton {
                         id: auto_button;
                         text: "Auto";
                         exclusiveGroup: modeGroup;
                         checked: false;
-//                        onCheckedChanged: changeFlightMode()
+                        onClicked: changeFlightMode()
                     }
                 }
             }
@@ -507,14 +507,14 @@ Rectangle {
                         text: "Alt Control";
                         checked: false
                         exclusiveGroup: assistGroup;
-//                        onCheckedChanged: changeFlightMode()
+                        onClicked: changeFlightMode()
                     }
                     RadioButton {
                         id: pos_control_button
                         text: "Pos Control";
                         checked: true
                         exclusiveGroup: assistGroup;
-//                        onCheckedChanged: changeFlightMode()
+                        onClicked: changeFlightMode()
                     }
                 }
             }
@@ -536,18 +536,16 @@ Rectangle {
                         text: "Mission";
                         checked: false;
                         exclusiveGroup: autoGroup;
-//                        onCheckedChanged: changeFlightMode()
+                        onClicked: changeFlightMode()
                     }
                     RadioButton {
                         id: loiter_button
                         text: "Loiter";
                         checked: true;
                         exclusiveGroup: autoGroup
-//                        onCheckedChanged: changeFlightMode()
+                        onClicked: changeFlightMode()
                     }
                 }
             }
         }
-}
-
 }

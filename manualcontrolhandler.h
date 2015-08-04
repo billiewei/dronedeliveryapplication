@@ -9,6 +9,11 @@
 #include <QTcpSocket>
 #include <QNetworkSession>
 
+#include "mavlink/v1.0/common/mavlink.h"
+#include "mavlink/v1.0/pixhawk/mavlink.h"
+#include "px4_custom_mode.h"
+//#include "dearbuttons.h"
+
 class ManualControlHandler : public QQuickItem
 {
     Q_OBJECT
@@ -18,6 +23,7 @@ class ManualControlHandler : public QQuickItem
     Q_PROPERTY(int voltage READ voltage WRITE setVoltage NOTIFY voltageChanged)
     Q_PROPERTY(double longitude READ longitude WRITE setLongitude NOTIFY longitudeChanged)
     Q_PROPERTY(double latitude READ latitude WRITE setLatitude NOTIFY latitudeChanged)
+
 public:
     ManualControlHandler(QQuickItem* parent = 0);
 
@@ -41,20 +47,31 @@ public slots:
     void setStatus(QString s);
     void setPort(int p);
     void setVoltage(int v);
-    void setLongitude(int l);
-    void setLatitude(int l);
+    void setLongitude(int32_t l);
+    void setLatitude(int32_t l);
 
-    void setX(double x);
-    void setY(double y);
-    void setZ(double z);
-    void setR(double r);
+    void set_mode_disarm();
+    void set_mode_arm();
+
+    void set_mode_return();
+    void set_mode_manual();
+    void set_mode_assist_altctl();
+    void set_mode_assist_posctl();
+    void set_mode_auto_mission();
+    void set_mode_auto_loiter();
+    void set_mode_auto_delivery();
+
+    void setX(int x);
+    void setY(int y);
+    void setZ(int z);
+    void setR(int r);
+    void setButtons(uint16_t b);
 
     void connectServer();
     void disconnectServer();
 
-    void sendModeCommand(int m);
-    void sendArmCommand(bool armed);
-    void sendControlCommand();
+    void startTimer();
+    void stopTimer();
 
     void read(); //read GPS and Battery voltage in one function
 
@@ -80,6 +97,25 @@ private:
     int m_z;
     int m_r;
 
+ //get this from mav serial port
+    uint8_t system_id;//ID of the sending system
+    uint8_t component_id;//ID of the sending component
+    uint8_t target_system;//ID of receiving system. px4 by default is 1
+    uint8_t target_component;//ID of receiving component. 0 for all component
+
+    double lat; //correct latitude
+    double lon; //correct longitude
+
+    int16_t x;
+    int16_t y;
+    int16_t z;
+    int16_t r;
+    uint16_t buttons;
+
+    //76 arm and disarm
+    void send_command_long(uint16_t CMD_ID, uint8_t confirmation, float f1, float f2, float f3, float f4, float f5, float f6, float f7);
+    //send x y z r and mode switch
+    void send_manual_control();
 };
 
 #endif // MANUALCONTROLHANDLER_H

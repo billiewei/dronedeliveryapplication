@@ -1,7 +1,11 @@
 #include "manualcontrolhandler.h"
+#include "dearbuttons.h"
 
 ManualControlHandler::ManualControlHandler(QQuickItem* parent):
-    QQuickItem(parent),
+    QQuickItem(parent),system_id(0),component_id(0),
+    target_system(1),target_component(0),
+    x(0), y(0), z(0), r(0),
+    buttons(BUTTON_MANUAL),
     m_hostAddress(""), m_status("run with server"),
     m_port(0), m_voltage(0),
     m_latitude(22.3341732), m_longitude(114.2644281)
@@ -13,7 +17,7 @@ ManualControlHandler::ManualControlHandler(QQuickItem* parent):
 
 
     timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(sendControlCommand()));
+    connect(timer, SIGNAL(timeout()), this, SLOT(send_manual_control()));
 
     QNetworkConfigurationManager manager;
     if (manager.capabilities() & QNetworkConfigurationManager::NetworkSessionRequired) {
@@ -43,7 +47,8 @@ void ManualControlHandler::connectServer(){
 
     tcpSocket->abort();
     tcpSocket->connectToHost(hostAddress(),port());
-    timer->start(250);//40Hz
+    setStatus("Connected to server");
+    timer->start(500);//20Hz
 
 }
 
@@ -53,39 +58,28 @@ void ManualControlHandler::disconnectServer(){
     setStatus("Disconnected");
 }
 
-void ManualControlHandler::sendModeCommand(int m){
-    //M m M
-    char buffer[4];
-    sprintf(buffer,"M%dM",m);
-
-    //stop timer and restart it again
+void ManualControlHandler::startTimer(){
     timer->stop();
-    tcpSocket->write(buffer);
-    timer->start(250); //40Hz
-
-    //we can repeat to improve the quality
-    //QTimer::singleShot(1000, tcpSocket, SLOT(write(buffer)));
-
+    timer->start(500);
+    //the correct procedure should be
 }
 
-void ManualControlHandler::sendArmCommand(bool armed){
-    //A 0,1 A
-    char buffer[4];
-    sprintf(buffer,"A%dA",armed);
-    tcpSocket->write(buffer);
+void ManualControlHandler::stopTimer(){
+    timer->stop();
 }
 
-void ManualControlHandler::sendControlCommand(){
-    // X x Y y Z z R r
-    char buffer[9];
-    sprintf(buffer,"X%dY%dZ%dR%d", m_x, m_y, m_z, m_r);
-    tcpSocket->write(buffer);
-}
+
+
 
 void ManualControlHandler::read(){
     QByteArray ba = tcpSocket->readAll();
     unsigned char *buffer;
     buffer = (unsigned char*)ba.data();
+    qDebug() << ba;
+
+
+
+    //decode
 }
 
 void ManualControlHandler::displayError(QAbstractSocket::SocketError socketError){
@@ -147,20 +141,24 @@ double ManualControlHandler::latitude() const{
     return m_latitude;
 }
 
-void ManualControlHandler::setX(double x){
-    m_x = (int)x;
+void ManualControlHandler::setX(int x){
+    x = (int16_t)x;
 }
 
-void ManualControlHandler::setY(double y){
-    m_y = (int)y;
+void ManualControlHandler::setY(int y){
+    y = (int16_t)y;
 }
 
-void ManualControlHandler::setZ(double z){
-    m_z = (int)z;
+void ManualControlHandler::setZ(int z){
+    z = (int16_t)z;
 }
 
-void ManualControlHandler::setR(double r){
-    m_r = (int)r;
+void ManualControlHandler::setR(int r){
+    r = (int16_t)r;
+}
+
+void ManualControlHandler::setButtons(uint16_t b){
+    buttons = b;
 }
 
 void ManualControlHandler::setHostAddress(QString a){
@@ -191,12 +189,81 @@ void ManualControlHandler::setVoltage(int v){
     }
 }
 
-void ManualControlHandler::setLongitude(int l){
-    m_longitude = l;
+void ManualControlHandler::setLongitude(int32_t l){
+    m_longitude = l / 1000000.0;
     emit longitudeChanged();
 }
 
-void ManualControlHandler::setLatitude(int l){
-    m_latitude = l;
+void ManualControlHandler::setLatitude(int32_t l){
+    m_latitude = l / 1000000.0;
     emit latitudeChanged();
+}
+
+void ManualControlHandler::set_mode_disarm(){
+    setButtons(BUTTON_ALLZERO);
+    send_command_long(MAV_CMD_DO_SET_MODE,0,MAV_MODE_MANUAL_DISARMED,0,0,0,0,0,0);
+    qDebug() << "MODE_MODE_MANUAL_DISARMED";
+}
+
+void ManualControlHandler::set_mode_arm(){
+    setButtons(BUTTON_ALLZERO);
+    send_command_long(MAV_CMD_DO_SET_MODE,0,MAV_MODE_MANUAL_ARMED,0,0,0,0,0,0);
+    qDebug() << "MODE_MODE_MANUAL_ARMED";
+}
+
+void ManualControlHandler::set_mode_return(){
+    setButtons(BUTTON_RETURN);
+    qDebug() << "BUTTON_RETURN";
+}
+
+void ManualControlHandler::set_mode_auto_delivery(){
+    setButtons(BUTTON_AUTO_DELIVERY);
+    qDebug() << "BUTTON_RETURN";
+}
+
+void ManualControlHandler::set_mode_manual(){
+    setButtons(BUTTON_MANUAL);
+   // qDebug() << "BUTTON_MANUAL";
+}
+
+void ManualControlHandler::set_mode_assist_altctl(){
+    setButtons(BUTTON_ASSIST_ALTCTL);
+    // qDebug() << "BUTTON_ASSIST_ALTCTL";
+}
+
+void ManualControlHandler::set_mode_assist_posctl(){
+    setButtons(BUTTON_ASSIST_POSCTL);
+   // qDebug() << "BUTTON_ASSIST_POSCTL";
+}
+
+void ManualControlHandler::set_mode_auto_mission(){
+    setButtons(BUTTON_AUTO_MISSION);
+   // qDebug() << "BUTTON_AUTO_MISSION";
+}
+
+void ManualControlHandler::set_mode_auto_loiter(){
+    setButtons(BUTTON_AUTO_LOITER);
+    qDebug() << "BUTTON_AUTO_LOITER";
+}
+
+//69
+void ManualControlHandler::send_manual_control(){
+    mavlink_message_t msg;
+    uint8_t buffer[2048];
+     mavlink_msg_manual_control_pack(0, 0, &msg, target_system, x, y, z, r, buttons);
+    int size = mavlink_msg_to_send_buffer(buffer, &msg);
+    QByteArray ba((char*)buffer,size);
+    tcpSocket->write(ba);
+}
+
+//76
+void ManualControlHandler::send_command_long(uint16_t CMD_ID, uint8_t confirmation, float f1, float f2, float f3, float f4, float f5, float f6, float f7){
+    mavlink_message_t msg;
+    uint8_t buffer[2048];
+
+    mavlink_msg_command_long_pack(system_id, component_id, &msg, target_system, target_component,
+                                  CMD_ID, confirmation, f1, f2, f3, f4, f5, f6, f7);
+    int size = mavlink_msg_to_send_buffer(buffer, &msg);
+    QByteArray ba((char*)buffer,size);
+    tcpSocket->write(ba);
 }

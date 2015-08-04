@@ -20,7 +20,6 @@ include(deployment.pri)
 
 HEADERS += \
     vendorhandler.h \
-    dearbuttons.h \
     px4_custom_mode.h \
     console.h \
     addresspagehandler.h \
