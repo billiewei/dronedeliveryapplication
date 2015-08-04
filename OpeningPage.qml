@@ -20,7 +20,7 @@ Rectangle {
         asynchronous : true
     }
     Text {
-        text: "KEE WAHWAH BAKERY"
+        text: "HARVARD-HKUST\nDRONE DELIVERY"
         anchors.horizontalCenter: parent.horizontalCenter
         y:logo.y + logo.height + 50
         font.family: "Avenir"

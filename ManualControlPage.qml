@@ -38,7 +38,7 @@ Rectangle {
 
     Button{
         id: home_button
-        iconSource: "images/home.png"
+        text: "Home"
         anchors.top: parent.top
         anchors.topMargin: page.height*0.01
         anchors.left: parent.left
