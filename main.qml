@@ -23,6 +23,7 @@ ApplicationWindow {
             MenuItem {
                 text: qsTr("A&bout")
                 onTriggered: {
+                    opening_page.visible = false
                     about_page.visible = true
                     address_page.visible = false
                     battery_status_page.visible = false
@@ -31,7 +32,6 @@ ApplicationWindow {
                     drone_location_page.visible = false
                     malfunctioning_page.visible = false
                     menu_page.visible = false
-                    opening_page.visible = false
                     payment_page.visible = false
                     pending_order_page.visible = false
                     vendor_track_page.visible = false

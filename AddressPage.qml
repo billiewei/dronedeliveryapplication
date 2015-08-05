@@ -71,7 +71,7 @@ Rectangle {
         y: currentcustomercity.y + page.height*.08  //0.12
         width: (page.width) * 0.45
         height: page.height*.065    //0.1
-        validator: IntValidator {bottom: 0; top: 99999;}
+        validator: IntValidator {bottom: 0; top: 999999;}
         placeholderText: qsTr("Zip Code")
     }
     TextField {
