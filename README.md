@@ -4,7 +4,7 @@ Harvard-HKUST UAV Application 2015 // Android Version
 - Website: http://projects.iq.harvard.edu/h2sp
 - Facebook: https://www.facebook.com/hkustharvard
 
-This repository contains the code for the UAV (unmanned aerial vehicle) control Android application created by the Harvard-HKUST 2015 team. The application was developed using the Qt Creator environment. It tracks the flight path and battery life of a UAV in the process of delivering objects. The application is built on QML, C++, and the [MAVLink Micro Air Vehicle Communication Protocol](http://qgroundcontrol.org/mavlink/start). It can be run on both Windows and Mac systems. It cannot yet be deployed to Android or iOS devices, since QtSerialPort is not supported.
+This repository contains the code for the UAV (unmanned aerial vehicle) control Android application created by the Harvard-HKUST 2015 team. The application was developed using the Qt Creator environment. It tracks the flight path and battery life of a UAV in the process of delivering objects using WiFi connectivity. The application is built on QML, C++, and the [MAVLink Micro Air Vehicle Communication Protocol](http://qgroundcontrol.org/mavlink/start). It can be run on both Windows and Mac systems, and also Android devices.
 
 Please follow the steps below if you wish to run, modify, and/or improve upon the project.
 
